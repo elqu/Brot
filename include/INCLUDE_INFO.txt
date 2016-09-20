@@ -1,0 +1,3 @@
+Brot depends on Eigen (eigen.tuxfamily.org) and png++ (nongnu.org/pngpp). If
+you don't have these libraries installed, please add Eigen into a subfolder
+called Eigen in this directory and proceed likewise with png++.
