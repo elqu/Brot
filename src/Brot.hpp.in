@@ -1,0 +1,18 @@
+#ifndef BROT_BROT_H
+#define BROT_BROT_H
+
+#include <Eigen/Core>
+
+#include <array>
+
+#define BROT_VERSION_MAJOR @BROT_VERSION_MAJOR@
+#define BROT_VERSION_MINOR @BROT_VERSION_MINOR@
+#define BROT_VERSION_PATCH @BROT_VERSION_PATCH@
+
+using Real = double;
+using Vec3 = Eigen::Vector3d;
+template<typename T, std::size_t N> using Array = std::array<T, N>;
+
+constexpr Real pi = 3.14159265358979323846;
+
+#endif
