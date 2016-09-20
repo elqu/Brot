@@ -5,3 +5,5 @@ build/
 
 include/Eigen/
 include/png++/
+
+*.swp
