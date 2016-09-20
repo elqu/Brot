@@ -3,6 +3,8 @@
 
 #include "Brot.hpp"
 
+#include <array>
+
 class Tri {
     public:
         Tri(Vec3 a, Vec3 b, Vec3 c) : verts{{a, b, c}} {};
@@ -13,7 +15,7 @@ class Tri {
         //std::shared_ptr<Material> get_mat() const {return mat;};
 
     private:
-        Array<Vec3, 3> verts;
+        std::array<Vec3, 3> verts;
 };
 
 #endif
