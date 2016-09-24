@@ -3,12 +3,12 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
-std::array<double, 3> Tracer::trace(const double p_return, const Vec3& ray_orig, const Vec3& ray_dir) {
+Vec3 Tracer::trace(const double p_return, const Vec3& ray_orig, const Vec3& ray_dir) {
     auto intersect = scene.intersect(ray_orig, ray_dir);
     if(intersect.tri == nullptr)
-        return {{0., 0., 0.}};
+        return {0., 0., 0.};
 
-    const Tri& tri = *intersect.tri;
+    const TriMat& tri = *intersect.tri;
 
     Vec3 basis_u = tri[1] - tri[0];
     Vec3 basis_v = tri[2] - tri[0];
@@ -21,7 +21,7 @@ std::array<double, 3> Tracer::trace(const double p_return, const Vec3& ray_orig,
     Vec3 normal = basis_u.cross(basis_v);
     normal.normalize();
 
-    if(normal.dot(ray_dir) > 0)
+    if(normal.dot(ray_dir) > 0.)
         normal *= -1.;
 
     // A normalized basis will be necessary from here on out
@@ -33,19 +33,17 @@ std::array<double, 3> Tracer::trace(const double p_return, const Vec3& ray_orig,
     Eigen::Quaterniond rot = rot_phi * rot_theta;
     Vec3 new_ray_dir = rot * normal;
 
-    std::array<double, 3> reflected;
+    Vec3 reflected;
     if(rand_gen() > p_return)
-        reflected = trace(p_return, new_ray_orig, new_ray_dir);
+        reflected = pi * trace(p_return, new_ray_orig, new_ray_dir);
     else
-        reflected = {{0., 0., 0.}};
+        reflected = {0., 0., 0.};
 
-    for(auto &a : reflected)
-        a /= (1. - p_return);
+    reflected /= (1. - p_return);
 
-    std::array<double, 3> result;
-    for(std::size_t i = 0; i < 3; ++i)
-        result[i] = 0.1 + .65 * reflected[i];
-        //result[i] = tri.get_emit()[i] + tri.get_color()[i] * reflected[i];
+    Material* mat = scene.get_mat(tri);
+    Vec3 result = mat->emit(-ray_dir)
+                  + mat->bsdf(new_ray_dir, -ray_dir).cwiseProduct(reflected);
 
     return result;
 }

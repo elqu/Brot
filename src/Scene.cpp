@@ -6,7 +6,7 @@ RayTriIntersect Scene::intersect(const Vec3& ray_orig, const Vec3& ray_dir) cons
     constexpr double epsilon = 0.000001;
     RayTriIntersect closest_intersect;
 
-    for(const Tri& tri : tris) {
+    for(const TriMat& tri : tris) {
         Vec3 edge1 = tri[1] - tri[0];
         Vec3 edge2 = tri[2] - tri[0];
 
@@ -37,67 +37,71 @@ RayTriIntersect Scene::intersect(const Vec3& ray_orig, const Vec3& ray_dir) cons
 }
 
 void Scene::load() {
+    auto mat_light = add_mat<MatLambert>(Vec3{0., 0., 0.}, Vec3{0.9, 0.9, 0.9});
+    auto mat_grey = add_mat<MatLambert>(Vec3{0.8, 0.8, 0.8});
+    auto mat_red = add_mat<MatLambert>(Vec3{0.8, 0.07, 0.07});
+    auto mat_green = add_mat<MatLambert>(Vec3{0.07, 0.8, 0.07});
+    auto mat_pink = add_mat<MatLambert>(Vec3{0.5, 0.07, 0.5});
     // Top, light
-    add_tri({
-            {-2., 2., -2.},
-            {2., 2., -2.},
-            {-2., 2., 2.},
+    add_tri({mat_light,
+            Vec3{-2., 2., -2.},
+            Vec3{2., 2., -2.},
+            Vec3{-2., 2., 2.}
     });
-    add_tri({
-            {2., 2., 2.},
-            {2., 2., -2.},
-            {-2., 2., 2.},
+    add_tri({mat_light,
+            Vec3{2., 2., 2.},
+            Vec3{2., 2., -2.},
+            Vec3{-2., 2., 2.}
     });
     // Left
-    add_tri({
-            {-2., 2., -2.},
-            {-2., 2., 2.},
-            {-2., -2., 2.},
+    add_tri({mat_red,
+            Vec3{-2., 2., -2.},
+            Vec3{-2., 2., 2.},
+            Vec3{-2., -2., 2.}
     });
-    add_tri({
-            {-2., 2., -2.},
-            {-2., -2., 2.},
-            {-2., -2., -2.},
+    add_tri({mat_red,
+            Vec3{-2., 2., -2.},
+            Vec3{-2., -2., 2.},
+            Vec3{-2., -2., -2.}
     });
     // Back
-    add_tri({
-            {-2., 2., -2.},
-            {-2., -2., -2.},
-            {2., 2., -2.},
+    add_tri({mat_grey,
+            Vec3{-2., 2., -2.},
+            Vec3{-2., -2., -2.},
+            Vec3{2., 2., -2.}
     });
-    add_tri({
-            {2., -2., -2.},
-            {-2., -2., -2.},
-            {2., 2., -2.},
+    add_tri({mat_grey,
+            Vec3{2., -2., -2.},
+            Vec3{-2., -2., -2.},
+            Vec3{2., 2., -2.}
     });
     // Bottom
-    add_tri({
-            {-2., -2., -2.},
-            {-2., -2., 2.},
-            {2., -2., -2.},
+    add_tri({mat_grey,
+            Vec3{-2., -2., -2.},
+            Vec3{-2., -2., 2.},
+            Vec3{2., -2., -2.}
     });
-    add_tri({
-            {2., -2., 2.},
-            {-2., -2., 2.},
-            {2., -2., -2.},
+    add_tri({mat_grey,
+            Vec3{2., -2., 2.},
+            Vec3{-2., -2., 2.},
+            Vec3{2., -2., -2.}
     });
     // Right
-    add_tri({
-            {2., -2., 2.},
-            {2., -2., -2.},
-            {2., 2., 2.},
+    add_tri({mat_green,
+            Vec3{2., -2., 2.},
+            Vec3{2., -2., -2.},
+            Vec3{2., 2., 2.}
     });
-    add_tri({
-            {2., -2., -2.},
-            {2., 2., -2.},
-            {2., 2., 2.},
+    add_tri({mat_green,
+            Vec3{2., -2., -2.},
+            Vec3{2., 2., -2.},
+            Vec3{2., 2., 2.}
     });
     // Floating
-    add_tri({
-            {-0.8, -1.4, 1.},
-            {0.6, -1.6, 1.2},
-            {0.1, -1.2, -0.6},
+    add_tri({mat_pink,
+            Vec3{-0.8, -1.4, 1.},
+            Vec3{0.6, -1.6, 1.2},
+            Vec3{0.1, -1.2, -0.6}
     });
 
 }
-

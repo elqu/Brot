@@ -4,6 +4,7 @@
 #include "Brot.hpp"
 
 #include <array>
+#include <utility>
 
 class Tri {
     public:
@@ -12,10 +13,18 @@ class Tri {
         Vec3 get_b() const {return verts[1];};
         Vec3 get_c() const {return verts[2];};
         Vec3 operator[](std::size_t i) const {return verts[i];};
-        //std::shared_ptr<Material> get_mat() const {return mat;};
-
     private:
         std::array<Vec3, 3> verts;
+};
+
+class TriMat : public Tri {
+    public:
+        template<typename... Args>
+        TriMat(std::size_t mat, Args&&... args)
+            : Tri(std::forward<Args>(args)...), mat(mat) {};
+        std::size_t get_mat() const {return mat;};
+    private:
+        std::size_t mat;
 };
 
 #endif

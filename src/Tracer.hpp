@@ -21,7 +21,7 @@ class Tracer {
     public:
         Tracer(const Scene& scene)
             : scene{scene} {};
-        std::array<double, 3> trace(double p_return, const Vec3& ray_orig, const Vec3& ray_dir);
+        Vec3 trace(double p_return, const Vec3& ray_orig, const Vec3& ray_dir);
     private:
         const Scene& scene;
         RandGenerator rand_gen;

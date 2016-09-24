@@ -15,7 +15,7 @@
 
 #include <cmath>
 #include <cstdio>
-
+#include <cstdlib>
 
 png::byte real_to_byte(double real) {
     if(real > 1.)
@@ -31,11 +31,14 @@ png::byte real_to_byte(double real) {
     return 255. * real;
 }
 
-int main() {
+int main(int argc, char** argv) {
     printf("Brot v%d.%d.%d\n",
             BROT_VERSION_MAJOR,
             BROT_VERSION_MINOR,
             BROT_VERSION_PATCH);
+
+    const std::size_t n_samples = argc > 1 ? std::strtoul(argv[1], nullptr, 10)
+                                           : 20;
 
     Vec3 p_orig = {0., 0., 8.};
     Vec3 p_dir = {0., 0., -1};
@@ -52,16 +55,16 @@ int main() {
     for(png::uint_32 y = 0; y < image.get_height(); ++y) {
         for(png::uint_32 x = 0; x < image.get_width(); ++x) {
             std::array<double, 3> real_color{{0., 0., 0.}};
-            for(std::size_t i = 0; i < 20; ++i) {
+            for(std::size_t i = 0; i < n_samples; ++i) {
                 double lambda_x = (((double )x + 0.8 * rand_gen() + 0.1) / image.get_width() - .5) * .036;
                 double lambda_y = (.5 - ((double )y + 0.8 * rand_gen() + 0.1) / image.get_height()) * .036;
                 Vec3 dir = lambda_x * p_right + lambda_y * p_up + .05 * p_dir;
                 dir.normalize();
 
                 auto temp = tracer.trace(1./6., p_orig, dir);
-                real_color[0] += temp[0] / 20;
-                real_color[1] += temp[1] / 20;
-                real_color[2] += temp[2] / 20;
+                real_color[0] += temp[0] / n_samples;
+                real_color[1] += temp[1] / n_samples;
+                real_color[2] += temp[2] / n_samples;
             }
 
             image[y][x] = png::rgb_pixel(
