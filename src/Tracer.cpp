@@ -1,6 +1,6 @@
 #include "Tracer.hpp"
+#include "Scene.hpp"
 
-#include <Eigen/Core>
 #include <Eigen/Geometry>
 
 Vec3 Tracer::trace(const double p_return, const Vec3& ray_orig, const Vec3& ray_dir) {

@@ -1,11 +1,13 @@
 #ifndef BROT_TRACER_H
 #define BROT_TRACER_H
 
-#include "Scene.hpp"
 #include "Brot.hpp"
 
 #include <array>
 #include <random>
+
+// Forward declaration(s):
+class Scene;
 
 class RandGenerator {
     public:

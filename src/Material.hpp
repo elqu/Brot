@@ -3,8 +3,6 @@
 
 #include "Brot.hpp"
 
-#include <Eigen/Core>
-
 class Material {
     public:
         virtual ~Material() = default;

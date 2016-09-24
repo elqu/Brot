@@ -4,7 +4,6 @@
 #include "Brot.hpp"
 
 #include <array>
-#include <utility>
 
 class Tri {
     public:
