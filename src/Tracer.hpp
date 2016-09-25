@@ -3,7 +3,6 @@
 
 #include "Brot.hpp"
 
-#include <array>
 #include <random>
 
 // Forward declaration(s):
@@ -21,11 +20,12 @@ class RandGenerator {
 
 class Tracer {
     public:
-        Tracer(const Scene& scene)
-            : scene{scene} {};
-        Vec3 trace(double p_return, const Vec3& ray_orig, const Vec3& ray_dir);
+        Tracer(const Scene& scene, double p_return)
+            : scene{scene}, p_return{p_return} {};
+        Vec3 trace(std::size_t depth, double score, const Vec3& ray_orig, const Vec3& ray_dir);
     private:
         const Scene& scene;
+        double p_return;
         RandGenerator rand_gen;
 };
 

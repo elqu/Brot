@@ -1,9 +1,16 @@
 #include "Scene.hpp"
+#include "Material.hpp"
 
 #include <Eigen/Geometry>
 
+Scene::Scene() = default;
+Scene::~Scene() = default;
+
+Material* Scene::get_mat(const TriMat& tri) const {
+    return mats[tri.get_mat()].get();
+}
+
 RayTriIntersect Scene::intersect(const Vec3& ray_orig, const Vec3& ray_dir) const {
-    constexpr double epsilon = 0.000001;
     RayTriIntersect closest_intersect;
 
     for(const TriMat& tri : tris) {
@@ -41,7 +48,7 @@ void Scene::load() {
     auto mat_grey = add_mat<MatLambert>(Vec3{0.8, 0.8, 0.8});
     auto mat_red = add_mat<MatLambert>(Vec3{0.8, 0.07, 0.07});
     auto mat_green = add_mat<MatLambert>(Vec3{0.07, 0.8, 0.07});
-    auto mat_pink = add_mat<MatLambert>(Vec3{0.5, 0.07, 0.5});
+    auto mat_pink = add_mat<MatReflect>(Vec3{0.9, 0.9, 0.9});
     // Top, light
     add_tri({mat_light,
             Vec3{-2., 2., -2.},
@@ -101,7 +108,12 @@ void Scene::load() {
     add_tri({mat_pink,
             Vec3{-0.8, -1.4, 1.},
             Vec3{0.6, -1.6, 1.2},
-            Vec3{0.1, -1.2, -0.6}
+            Vec3{0.1, -1., -0.6}
+    });
+    add_tri({mat_pink,
+            Vec3{-0.7, -0.5, -0.5},
+            Vec3{-0.7, 0.5, -0.5},
+            Vec3{0.4, 0., 5.}
     });
 
 }

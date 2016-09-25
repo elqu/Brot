@@ -6,4 +6,6 @@ target_compile_options(brot PRIVATE "-Wall" "-Wextra" "-pedantic" "-std=c++14" "
 
 target_link_libraries(brot png z)
 
-set_target_properties(brot PROPERTIES LINK_FLAGS "-stdlib=libc++")
+set_target_properties(brot PROPERTIES
+                      LINK_FLAGS "-stdlib=libc++"
+                      LINK_FLAGS_DEBUG "-z now")

@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
     Scene scene;
     scene.load();
 
-    Tracer tracer{scene};
+    Tracer tracer{scene, 1./6.};
     RandGenerator rand_gen;
 
     png::image<png::rgb_pixel> image(512, 512);
@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
                 Vec3 dir = lambda_x * p_right + lambda_y * p_up + .05 * p_dir;
                 dir.normalize();
 
-                auto temp = tracer.trace(1./6., p_orig, dir);
+                auto temp = tracer.trace(0, 1., p_orig, dir);
                 real_color[0] += temp[0] / n_samples;
                 real_color[1] += temp[1] / n_samples;
                 real_color[2] += temp[2] / n_samples;

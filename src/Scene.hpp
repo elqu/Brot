@@ -1,12 +1,14 @@
 #ifndef BROT_SCENE_H
 #define BROT_SCENE_H
 
-#include "Material.hpp"
-#include "Tri.hpp"
 #include "Brot.hpp"
+#include "Tri.hpp"
 
 #include <limits>
 #include <vector>
+
+// Forward declaration(s):
+class Material;
 
 struct RayTriIntersect {
     RayTriIntersect()
@@ -21,14 +23,17 @@ struct RayTriIntersect {
 class Scene {
     public:
         using MatIndex = std::size_t;
+        Scene();
+        ~Scene();
         void add_tri(const TriMat& tri) {tris.push_back(tri);};
         void add_tri(TriMat&& tri) {tris.push_back(std::move(tri));};
         void load(); // Placeholder for proper load
         RayTriIntersect intersect(const Vec3& ray_orig, const Vec3& ray_dir) const;
         template<typename Mat, typename... Args> MatIndex add_mat(Args&&... args);
         Material* get_mat(std::size_t index) const {return mats[index].get();};
-        Material* get_mat(const TriMat& tri) const {return mats[tri.get_mat()].get();};
+        Material* get_mat(const TriMat& tri) const;
     private:
+        Real epsilon = 0.000001;
         std::vector<TriMat> tris;
         std::vector<std::unique_ptr<Material>> mats;
 };
