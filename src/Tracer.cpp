@@ -35,7 +35,7 @@ Vec3 Tracer::trace(const std::size_t depth, const double score, const Vec3& ray_
         basis_u.normalize();
         basis_v.normalize();
 
-        std::size_t n_rays = std::max<std::size_t>(16 * score, 1);
+        std::size_t n_rays = std::max<std::size_t>(8 * score, 1);
 
         for(std::size_t i = 0; i < n_rays; ++i) {
             auto new_ray_dir = mat->importance_dir(rand_gen(), rand_gen(), normal, basis_u, -ray_dir);

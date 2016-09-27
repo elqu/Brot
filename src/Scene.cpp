@@ -19,23 +19,23 @@ RayTriIntersect Scene::intersect(const Vec3& ray_orig, const Vec3& ray_dir) cons
 
         Vec3 p = ray_dir.cross(edge2);
 
-        double det = p.dot(edge1);
+        Real det = p.dot(edge1);
         if(-epsilon < det && det < epsilon)
             continue;
 
         Vec3 t = ray_orig - tri[0];
 
-        double u = t.dot(p) / det;
+        Real u = t.dot(p) / det;
         if(u < 0. || 1. < u)
             continue;
 
         Vec3 q = t.cross(edge1);
 
-        double v = ray_dir.dot(q) / det;
+        Real v = ray_dir.dot(q) / det;
         if(v < 0. || 1. < u + v)
             continue;
 
-        double new_dist = edge2.dot(q) / det;
+        Real new_dist = edge2.dot(q) / det;
         if(new_dist < closest_intersect.dist && new_dist > epsilon)
             closest_intersect = {new_dist, &tri, u, v};
     }
