@@ -44,11 +44,11 @@ RayTriIntersect Scene::intersect(const Vec3& ray_orig, const Vec3& ray_dir) cons
 }
 
 void Scene::load() {
-    auto mat_light = add_mat<MatLambert>(Vec3{0., 0., 0.}, Vec3{0.9, 0.9, 0.9});
-    auto mat_grey = add_mat<MatLambert>(Vec3{0.8, 0.8, 0.8});
-    auto mat_red = add_mat<MatLambert>(Vec3{0.8, 0.07, 0.07});
-    auto mat_green = add_mat<MatLambert>(Vec3{0.07, 0.8, 0.07});
-    auto mat_pink = add_mat<MatReflect>(Vec3{0.9, 0.9, 0.9});
+    auto mat_light = add_mat<MatLambert>(Color{0., 0., 0.}, Color{0.9, 0.9, 0.9});
+    auto mat_grey = add_mat<MatLambert>(Color{0.8, 0.8, 0.8});
+    auto mat_red = add_mat<MatLambert>(Color{0.8, 0.07, 0.07});
+    auto mat_green = add_mat<MatLambert>(Color{0.07, 0.8, 0.07});
+    auto mat_pink = add_mat<MatReflect>(Color{0.9, 0.9, 0.9});
     // Top, light
     add_tri({mat_light,
             Vec3{-2., 2., -2.},

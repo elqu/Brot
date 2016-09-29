@@ -22,7 +22,7 @@ class Tracer {
     public:
         Tracer(const Scene& scene, double p_return)
             : scene{scene}, p_return{p_return} {};
-        Vec3 trace(std::size_t depth, double score, const Vec3& ray_orig, const Vec3& ray_dir);
+        Color trace(std::size_t depth, double score, const Vec3& ray_orig, const Vec3& ray_dir);
     private:
         const Scene& scene;
         double p_return;

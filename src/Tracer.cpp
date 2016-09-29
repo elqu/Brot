@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-Vec3 Tracer::trace(const std::size_t depth, const double score, const Vec3& ray_orig, const Vec3& ray_dir) {
+Color Tracer::trace(const std::size_t depth, const double score, const Vec3& ray_orig, const Vec3& ray_dir) {
     auto intersect = scene.intersect(ray_orig, ray_dir);
     if(intersect.tri == nullptr)
         return {0., 0., 0.};
@@ -23,7 +23,7 @@ Vec3 Tracer::trace(const std::size_t depth, const double score, const Vec3& ray_
         normal *= -1.;
 
     const Material* mat = scene.get_mat(tri);
-    Vec3 reflected{0., 0., 0.};
+    Color reflected{0., 0., 0.};
 
     if(rand_gen() > p_return || depth < 1) {
         // Both options are valid. The current one should be slower but more
@@ -41,7 +41,7 @@ Vec3 Tracer::trace(const std::size_t depth, const double score, const Vec3& ray_
             auto new_ray_dir = mat->importance_dir(rand_gen(), rand_gen(), normal, basis_u, -ray_dir);
 
             auto bsdf_v = mat->importance_bsdf(normal, new_ray_dir, -ray_dir);
-            Vec3 l_in = trace(depth + 1, score * bsdf_v.maxCoeff() / n_rays, new_ray_orig, new_ray_dir);
+            auto l_in = trace(depth + 1, score * bsdf_v.maxCoeff() / n_rays, new_ray_orig, new_ray_dir);
             reflected += l_in.cwiseProduct(bsdf_v);
         }
 

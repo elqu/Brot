@@ -2,7 +2,7 @@
 
 #include <Eigen/Geometry>
 
-Vec3 Material::importance_bsdf(const Vec3& normal,
+Color Material::importance_bsdf(const Vec3& normal,
                                const Vec3& dir_in,
                                const Vec3& dir_out) const {
     return bsdf(normal, dir_in, dir_out);
@@ -27,15 +27,15 @@ Real Material::importance_theta(Real rand_var) const {
 };
 
 
-Vec3 MatLambert::emit(const Vec3&, const Vec3&) const {
+Color MatLambert::emit(const Vec3&, const Vec3&) const {
     return emit_v;
 }
 
-Vec3 MatLambert::bsdf(const Vec3& normal, const Vec3& dir_in, const Vec3&) const {
+Color MatLambert::bsdf(const Vec3& normal, const Vec3& dir_in, const Vec3&) const {
     return 2. * color * normal.dot(dir_in);
 }
 
-Vec3 MatLambert::importance_bsdf(const Vec3&, const Vec3&, const Vec3&) const {
+Color MatLambert::importance_bsdf(const Vec3&, const Vec3&, const Vec3&) const {
     return color;
 }
 
@@ -44,15 +44,15 @@ Real MatLambert::importance_theta(Real rand_var) const {
 }
 
 
-Vec3 MatReflect::emit(const Vec3&, const Vec3&) const {
+Color MatReflect::emit(const Vec3&, const Vec3&) const {
     return emit_v;
 }
 
-Vec3 MatReflect::bsdf(const Vec3&, const Vec3&, const Vec3&) const {
+Color MatReflect::bsdf(const Vec3&, const Vec3&, const Vec3&) const {
     return {0., 0., 0.}; // This really shouldn't be called
 }
 
-Vec3 MatReflect::importance_bsdf(const Vec3&, const Vec3&, const Vec3&) const {
+Color MatReflect::importance_bsdf(const Vec3&, const Vec3&, const Vec3&) const {
     return color;
 }
 

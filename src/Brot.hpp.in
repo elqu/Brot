@@ -9,6 +9,7 @@
 
 using Real = double;
 using Vec3 = Eigen::Vector3d;
+using Color = Vec3;
 
 constexpr Real pi = 3.14159265358979323846;
 
